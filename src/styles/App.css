@@ -14,3 +14,7 @@ main {
 .encounterMonster {
   display: flex;
 }
+
+.encounterMonster > * {
+  margin: 0 1em;
+}

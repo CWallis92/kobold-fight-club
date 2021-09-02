@@ -15,7 +15,7 @@ const EncounterBuilder = () => {
       <div id="leftCol" className="col">
         <EncounterParty />
         <EncounterBuild encounterBuild={encounterBuild}>
-          <h2>Start adding some monsters</h2>
+          <p>Start adding some monsters</p>
         </EncounterBuild>
       </div>
       <div id="rightCol" className="col">

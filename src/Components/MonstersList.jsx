@@ -7,54 +7,40 @@ const MonstersList = ({ setEncounterBuild }) => {
   const [monsters, setMonsters] = useState([]);
 
   useEffect(() => {
-    getMonsters().then(({ data: { results } }) => {
-      setMonsters(results);
-    });
-  }, []);
-
-  const updateEncounterBuild = (newMonster) => {
-    setEncounterBuild((currEncounterBuild) => {
-      const newEncounterBuild = [];
-      currEncounterBuild.forEach((monster) => {
-        let newCount = monster.count;
-        if (newMonster === monster.index) newCount++;
-        newEncounterBuild.push({
-          index: monster.index,
-          name: monster.name,
-          count: newCount,
-        });
+    getMonsters()
+      .then(({ data: { count } }) => {
+        // Assumes 50 items per page, as per docs https://api.open5e.com/
+        return getMonsters(count);
+      })
+      .then(({ data: { results } }) => {
+        setMonsters(results);
       });
-      if (!currEncounterBuild.find((monster) => monster.index === newMonster)) {
-        newEncounterBuild.push({
-          index: newMonster,
-          name: "Name",
-          count: 1,
-        });
-      }
-      return newEncounterBuild;
-    });
-  };
+  }, []);
 
   return (
     <div>
       <table>
-        <tr>
-          <th></th>
-          <th>Monster Name</th>
-          <th>CR</th>
-          <th>Size</th>
-          <th>Type</th>
-          <th>Alignment</th>
-        </tr>
-        {monsters.map((monster) => {
-          return (
-            <MonsterRow
-              key={monster.index}
-              monster={monster}
-              updateEncounterBuild={updateEncounterBuild}
-            />
-          );
-        })}
+        <thead>
+          <tr>
+            <th></th>
+            <th>Monster Name</th>
+            <th>CR</th>
+            <th>Size</th>
+            <th>Type</th>
+            <th>Alignment</th>
+          </tr>
+        </thead>
+        <tbody>
+          {monsters.map((monster) => {
+            return (
+              <MonsterRow
+                key={monster.slug}
+                monster={monster}
+                setEncounterBuild={setEncounterBuild}
+              />
+            );
+          })}
+        </tbody>
       </table>
     </div>
   );
