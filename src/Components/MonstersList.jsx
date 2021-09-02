@@ -37,15 +37,25 @@ const MonstersList = ({ setEncounterBuild }) => {
 
   return (
     <div>
-      {monsters.map((monster) => {
-        return (
-          <MonsterRow
-            key={monster.index}
-            monster={monster}
-            updateEncounterBuild={updateEncounterBuild}
-          />
-        );
-      })}
+      <table>
+        <tr>
+          <th></th>
+          <th>Monster Name</th>
+          <th>CR</th>
+          <th>Size</th>
+          <th>Type</th>
+          <th>Alignment</th>
+        </tr>
+        {monsters.map((monster) => {
+          return (
+            <MonsterRow
+              key={monster.index}
+              monster={monster}
+              updateEncounterBuild={updateEncounterBuild}
+            />
+          );
+        })}
+      </table>
     </div>
   );
 };

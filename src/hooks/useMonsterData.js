@@ -6,11 +6,12 @@ export const useMonsterData = (monster_id) => {
   const [monsterData, setMonsterData] = useState(null);
 
   useEffect(() => {
-    getMonsterData(monster_id).then(({ data }) => {
-      setMonsterData({
-        ac: data.armor_class,
-      });
-    });
+    getMonsterData(monster_id)
+      .then(({ data }) => {
+        console.log(data);
+        setMonsterData(data);
+      })
+      .catch((err) => console.log("Not found"));
   }, [monster_id]);
 
   return { monsterData, setMonsterData };
