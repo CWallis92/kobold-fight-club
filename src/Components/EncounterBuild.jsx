@@ -1,6 +1,6 @@
 const EncounterBuild = ({ children, encounterBuild }) => {
   return (
-    <section>
+    <section id="encounterBuild">
       <h2>Encounter</h2>
       {encounterBuild.length > 0
         ? encounterBuild.map((monster) => {

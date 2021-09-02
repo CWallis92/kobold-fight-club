@@ -1,15 +1,20 @@
-.App {
-  margin: 1em;
-}
-
 main {
   display: flex;
   justify-content: space-around;
 }
 
+.col {
+  padding: 1em;
+}
+
 #leftCol {
   width: 30%;
   min-width: 300px;
+  border-right: 1px solid gray;
+}
+
+#rightCol {
+  width: 70%;
 }
 
 .encounterMonster {
@@ -18,4 +23,17 @@ main {
 
 .encounterMonster > * {
   margin: 0 1em;
+}
+
+#encounterParty, #monstersFilter {
+  padding: 1em;
+  border-bottom: 1px solid gray;
+}
+
+#encounterBuild { 
+  padding-top: 1em;
+}
+
+#monstersList {
+  margin-top: 1em;
 }
