@@ -5,7 +5,7 @@ import {
   EncounterBuild,
   MonstersFilter,
   MonstersList,
-} from ".";
+} from "../Components";
 
 const EncounterBuilder = () => {
   const [encounterBuild, setEncounterBuild] = useState([]);

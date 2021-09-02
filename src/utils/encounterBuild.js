@@ -1,6 +1,7 @@
 export const updateEncounterBuild = (newMonster, setEncounterBuild) => {
   setEncounterBuild((currEncounterBuild) => {
     const newEncounterBuild = [];
+
     currEncounterBuild.forEach((currMonster) => {
       let newCount = currMonster.count;
       if (newMonster.slug === currMonster.slug) newCount++;
@@ -10,6 +11,7 @@ export const updateEncounterBuild = (newMonster, setEncounterBuild) => {
         count: newCount,
       });
     });
+
     if (
       !currEncounterBuild.find(
         (currMonster) => currMonster.slug === newMonster.slug
@@ -21,6 +23,7 @@ export const updateEncounterBuild = (newMonster, setEncounterBuild) => {
         count: 1,
       });
     }
+
     return newEncounterBuild;
   });
 };
