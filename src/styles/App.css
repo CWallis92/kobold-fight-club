@@ -7,8 +7,9 @@ main {
   justify-content: space-around;
 }
 
-.col {
-  width: 50vw;
+#leftCol {
+  width: 30%;
+  min-width: 300px;
 }
 
 .encounterMonster {

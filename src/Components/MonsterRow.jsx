@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
 import { updateEncounterBuild } from "../utils/encounterBuild";
 
@@ -10,7 +11,7 @@ const MonsterRow = ({ monster, setEncounterBuild }) => {
         <Button
           onClick={() => updateEncounterBuild(monster, setEncounterBuild)}
         >
-          ➕
+          <AddIcon />
         </Button>
       </td>
       <td>
