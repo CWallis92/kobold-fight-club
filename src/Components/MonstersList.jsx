@@ -14,7 +14,7 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 
 import { getMonsters } from "../utils/api";
-import { updateEncounterBuild } from "../utils/encounterBuild";
+import { addToEncounter } from "../utils/encounterBuild";
 
 const MonstersList = ({ setEncounterBuild }) => {
   const [monsters, setMonsters] = useState([]);
@@ -41,7 +41,6 @@ const MonstersList = ({ setEncounterBuild }) => {
         setMonsters(
           results.map((monster) => {
             monster.id = monster.slug;
-            monster.button = <button>Test</button>;
             return monster;
           })
         );
@@ -81,7 +80,9 @@ const MonstersList = ({ setEncounterBuild }) => {
                   size="small"
                   variant="contained"
                   onClick={() =>
-                    updateEncounterBuild(monster, setEncounterBuild)
+                    setEncounterBuild((currEncounterBuild) =>
+                      addToEncounter(1, monster, currEncounterBuild)
+                    )
                   }
                 >
                   <AddIcon />

@@ -10,7 +10,6 @@ main {
 #leftCol {
   width: 30%;
   min-width: 300px;
-  border-right: 1px solid gray;
 }
 
 #rightCol {
@@ -25,9 +24,21 @@ main {
   margin: 0 1em;
 }
 
-#encounterParty, #monstersFilter {
+#encounterParty {
   padding: 1em;
   border-bottom: 1px solid gray;
+}
+
+#encounterTotal {
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 1px solid gray;
+  display: flex;
+  justify-content: space-between;
+}
+
+#monstersFilter {
+  padding: 1em;
 }
 
 #encounterBuild { 

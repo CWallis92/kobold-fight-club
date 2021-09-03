@@ -1,18 +1,17 @@
-const EncounterBuild = ({ children, encounterBuild }) => {
+import { EncounterMonsters } from ".";
+
+const EncounterBuild = ({ children, encounterBuild, setEncounterBuild }) => {
   return (
     <section id="encounterBuild">
-      <h2>Encounter</h2>
-      {encounterBuild.length > 0
-        ? encounterBuild.map((monster) => {
-            return (
-              <div key={monster.slug} className="encounterMonster">
-                <p>{monster.slug}</p>
-                <p>{monster.name}</p>
-                <p>{monster.count}</p>
-              </div>
-            );
-          })
-        : children}
+      {encounterBuild.map((monster) => {
+        return (
+          <EncounterMonsters
+            monster={monster}
+            setEncounterBuild={setEncounterBuild}
+            key={monster.slug}
+          />
+        );
+      })}
     </section>
   );
 };
