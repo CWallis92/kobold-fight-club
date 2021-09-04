@@ -1,6 +1,6 @@
 import { EncounterMonsters } from ".";
 
-const EncounterBuild = ({ children, encounterBuild, setEncounterBuild }) => {
+const EncounterBuild = ({ encounterBuild, setEncounterBuild }) => {
   return (
     <section id="encounterBuild">
       {encounterBuild.map((monster) => {

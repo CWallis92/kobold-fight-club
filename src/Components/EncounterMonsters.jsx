@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { addToEncounter, resetEncounterMonster } from "../utils/encounterBuild";
 
-const EncounterMonsters = ({ monster, encounterBuild, setEncounterBuild }) => {
+const EncounterMonsters = ({ monster, setEncounterBuild }) => {
   const [monsterCount, setMonsterCount] = useState(monster.count);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const EncounterMonsters = ({ monster, encounterBuild, setEncounterBuild }) => {
           value={monsterCount}
           onChange={(event) => {
             if (event.target.value === "") setMonsterCount("");
-            if (/^[1-9][0-9]*$/.test(event.target.value))
+            if (/^[1-9][0-9]{0,2}$/.test(event.target.value)) {
               setEncounterBuild((currEncounterBuild) =>
                 resetEncounterMonster(
                   event.target.value,
@@ -46,6 +46,7 @@ const EncounterMonsters = ({ monster, encounterBuild, setEncounterBuild }) => {
                   currEncounterBuild
                 )
               );
+            }
           }}
         />
 

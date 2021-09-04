@@ -12,13 +12,26 @@ import {
   IconButton,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 
 import { getMonsters } from "../utils/api";
 import { addToEncounter } from "../utils/encounterBuild";
+import { newColumnSort, toggleColumn } from "../utils/tableFunctions";
 
 const MonstersList = ({ setEncounterBuild }) => {
   const [monsters, setMonsters] = useState([]);
+  const [monstersSort, setMonstersSort] = useState({
+    column: "name",
+    order: "asc",
+  });
   const [isLoading, setIsLoading] = useState(true);
+
+  const applySort = (col) => {
+    if (monstersSort.column !== col)
+      toggleColumn(col, monstersSort.order, setMonsters, setMonstersSort);
+    else newColumnSort(col, setMonsters, setMonstersSort);
+  };
 
   const useStyles = makeStyles({
     root: {
@@ -60,11 +73,86 @@ const MonstersList = ({ setEncounterBuild }) => {
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
-            <TableCell>Monster Name</TableCell>
-            <TableCell>CR</TableCell>
-            <TableCell>Size</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>Alignment</TableCell>
+            <TableCell
+              data="name"
+              onClick={(event) => applySort(event.target.getAttribute("data"))}
+              className="headerColumn"
+            >
+              Monster Name{" "}
+              {(() => {
+                if (monstersSort.column === "name") {
+                  return monstersSort.order === "asc" ? (
+                    <ArrowUpwardIcon className={"arrow"} />
+                  ) : (
+                    <ArrowDownwardIcon className={"arrow"} />
+                  );
+                }
+              })()}
+            </TableCell>
+            <TableCell
+              data="challenge_rating"
+              onClick={(event) => applySort(event.target.getAttribute("data"))}
+              className="headerColumn"
+            >
+              CR{" "}
+              {(() => {
+                if (monstersSort.column === "challenge_rating") {
+                  return monstersSort.order === "asc" ? (
+                    <ArrowUpwardIcon className={"arrow"} />
+                  ) : (
+                    <ArrowDownwardIcon className={"arrow"} />
+                  );
+                }
+              })()}
+            </TableCell>
+            <TableCell
+              data="size"
+              onClick={(event) => applySort(event.target.getAttribute("data"))}
+              className="headerColumn"
+            >
+              Size{" "}
+              {(() => {
+                if (monstersSort.column === "size") {
+                  return monstersSort.order === "asc" ? (
+                    <ArrowUpwardIcon className={"arrow"} />
+                  ) : (
+                    <ArrowDownwardIcon className={"arrow"} />
+                  );
+                }
+              })()}
+            </TableCell>
+            <TableCell
+              data="type"
+              onClick={(event) => applySort(event.target.getAttribute("data"))}
+              className="headerColumn"
+            >
+              Type{" "}
+              {(() => {
+                if (monstersSort.column === "type") {
+                  return monstersSort.order === "asc" ? (
+                    <ArrowUpwardIcon className={"arrow"} />
+                  ) : (
+                    <ArrowDownwardIcon className={"arrow"} />
+                  );
+                }
+              })()}
+            </TableCell>
+            <TableCell
+              data="alignment"
+              onClick={(event) => applySort(event.target.getAttribute("data"))}
+              className="headerColumn"
+            >
+              Alignment{" "}
+              {(() => {
+                if (monstersSort.column === "alignment") {
+                  return monstersSort.order === "asc" ? (
+                    <ArrowUpwardIcon className={"arrow"} />
+                  ) : (
+                    <ArrowDownwardIcon className={"arrow"} />
+                  );
+                }
+              })()}
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

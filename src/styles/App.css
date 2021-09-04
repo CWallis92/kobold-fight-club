@@ -48,3 +48,11 @@ main {
 #monstersList {
   margin-top: 1em;
 }
+
+.headerColumn {
+  cursor: pointer;
+}
+
+table .MuiSvgIcon-root {
+  float: right;
+}
