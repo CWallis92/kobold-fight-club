@@ -5,6 +5,7 @@ main {
 
 .col {
   padding: 1em;
+  height: calc(100vh - 2em);
 }
 
 #leftCol {
@@ -14,6 +15,14 @@ main {
 
 #rightCol {
   width: 70%;
+  position: relative;
+}
+
+#listLoading {
+  text-align: center;
+  position: absolute;
+  top: 49%;
+  right: 50%;
 }
 
 .encounterMonster {
@@ -55,4 +64,8 @@ main {
 
 table .MuiSvgIcon-root {
   float: right;
+}
+
+#xpTotals{
+  text-align: right;
 }

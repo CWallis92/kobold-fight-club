@@ -11,9 +11,9 @@ function App() {
           <Route exact path="/">
             <EncounterBuilder />
           </Route>
-          <Route path="/:monster_name">
+          {/* <Route path="/:monster_name">
             <MonsterPage />
-          </Route>
+          </Route> */}
         </Switch>
       </div>
     </Router>

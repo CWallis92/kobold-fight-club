@@ -1,4 +1,4 @@
-import { ButtonGroup, IconButton, TextField } from "@material-ui/core";
+import { ButtonGroup, Button, TextField } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { useEffect, useState } from "react";
@@ -17,21 +17,18 @@ const EncounterMonsters = ({ monster, setEncounterBuild }) => {
       <h3>{monster.name}</h3>
       <p>CR: {monster.challenge_rating}</p>
       <p>XP: {monster.xp}</p>
-      <ButtonGroup
-        variant="contained"
-        color="primary"
-        style={{ marginLeft: "auto" }}
-      >
-        <IconButton
+      <ButtonGroup variant="contained" style={{ marginLeft: "auto" }}>
+        <Button
           size="small"
           onClick={() => {
             setEncounterBuild((currEncounterBuild) =>
               addToEncounter(-1, monster, currEncounterBuild)
             );
           }}
+          color="secondary"
         >
           <RemoveIcon />
-        </IconButton>
+        </Button>
 
         <TextField
           variant="outlined"
@@ -50,16 +47,17 @@ const EncounterMonsters = ({ monster, setEncounterBuild }) => {
           }}
         />
 
-        <IconButton
+        <Button
           size="small"
           onClick={() => {
             setEncounterBuild((currEncounterBuild) =>
               addToEncounter(1, monster, currEncounterBuild)
             );
           }}
+          color="secondary"
         >
           <AddIcon />
-        </IconButton>
+        </Button>
       </ButtonGroup>
     </div>
   );

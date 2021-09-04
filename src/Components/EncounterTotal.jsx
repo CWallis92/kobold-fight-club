@@ -40,7 +40,7 @@ const EncounterTotal = ({ encounterBuild }) => {
   return (
     <div id="encounterTotal">
       <p>Difficulty: XX</p>
-      <div>
+      <div id="xpTotals">
         <p>Total XP: {totalXP}</p>
         <p>Adjusted XP: {totalXP * multiplier}</p>
       </div>
