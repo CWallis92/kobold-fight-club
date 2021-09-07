@@ -1,23 +1,66 @@
-import { Slider, Typography } from "@material-ui/core";
+import {
+  Checkbox,
+  Chip,
+  Input,
+  ListItemText,
+  makeStyles,
+  MenuItem,
+  Select,
+  Slider,
+} from "@material-ui/core";
 import { memo, useEffect, useState, useContext, useRef } from "react";
 
 import { MonstersContext } from "../utils/Context";
 import { valueLabelFormat, descale, scale } from "../utils/crRange";
 
+const useStyles = makeStyles((theme) => ({
+  chips: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  chip: {
+    margin: 2,
+  },
+}));
+
+const allSizes = ["tiny", "small", "medium", "large", "huge", "gargantuan"];
+const allTypes = [
+  "aberration",
+  "beast", // Make sure beasts are included
+  "celestial",
+  "construct", // Make sure constructs are included
+  "dragon",
+  "elemental",
+  "fey",
+  "fiend",
+  "giant",
+  "humanoid",
+  "monstrosity",
+  "ooze",
+  "plant",
+  "swarm",
+  "undead",
+];
+
 const MonstersFilter = () => {
+  const classes = useStyles();
+
   const { fullMonsters, filteredMonsters, setFilteredMonsters } =
     useContext(MonstersContext);
   const fullRef = useRef(fullMonsters);
+
   const [searchTerm, setSearchTerm] = useState("");
-  const [sizes, setSizes] = useState({
-    tiny: true,
-    small: true,
-    medium: true,
-    large: true,
-    huge: true,
-    gargantuan: true,
-  });
+  const [sizes, setSizes] = useState(allSizes);
+  const [types, setTypes] = useState(allTypes);
   const [crRange, setCrRange] = useState([0, 30]);
+
+  const updateSizes = (event) => {
+    setSizes(event.target.value);
+  };
+
+  const updateTypes = (event) => {
+    setTypes(event.target.value);
+  };
 
   useEffect(() => {
     setFilteredMonsters(() => {
@@ -29,65 +72,100 @@ const MonstersFilter = () => {
 
         return (
           monster.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 &&
-          sizes[monster.size.toLowerCase()] &&
+          sizes.includes(monster.size.toLowerCase()) &&
+          types.find((type) => monster.type.toLowerCase().indexOf(type) > -1) &&
           cr >= crRange[0] &&
           cr <= crRange[1]
         );
       });
     });
-  }, [searchTerm, sizes, crRange, setFilteredMonsters]);
-
-  const updateSizes = (size) => {
-    setSizes((currSizes) => {
-      const newSizes = { ...currSizes };
-      newSizes[size] = !newSizes[size];
-      return newSizes;
-    });
-  };
+  }, [searchTerm, sizes, types, crRange, setFilteredMonsters]);
 
   return (
     <div id="monstersFilter">
-      <label htmlFor="search">Search</label>
-      <input
-        id="search"
-        type="text"
-        val={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
-      />
-      <div>
-        {Object.keys(sizes).map((size) => {
-          return (
-            <div key={size}>
-              <input
-                type="checkbox"
-                id={`size__${size}`}
-                name={size}
-                checked={sizes[size]}
-                onChange={(event) => updateSizes(event.target.name)}
-              />
-              <label htmlFor={`size__${size}`}>
-                {size[0].toUpperCase() + size.slice(1)}
-              </label>
+      <fieldset>
+        <legend>Search</legend>
+        <input
+          id="search"
+          type="text"
+          val={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+      </fieldset>
+      <fieldset>
+        <legend>Size</legend>
+        <Select
+          labelId="sizesMultiSelect"
+          id="sizesMultiSelect"
+          multiple
+          value={sizes}
+          onChange={updateSizes}
+          input={<Input />}
+          renderValue={(selected) => (
+            <div className={classes.chips}>
+              {selected.map((value) => (
+                <Chip
+                  key={value}
+                  label={value[0].toUpperCase() + value.slice(1)}
+                  className={classes.chip}
+                />
+              ))}
             </div>
-          );
-        })}
-      </div>
-      <Typography id="cr-slider" gutterBottom>
-        Challenge Rating
-      </Typography>
-      <Slider
-        value={[descale(crRange[0]), descale(crRange[1])]}
-        onChange={(e, value) => {
-          setCrRange([scale(value[0]), scale(value[1])]);
-        }}
-        valueLabelFormat={valueLabelFormat}
-        valueLabelDisplay="auto"
-        aria-labelledby="cr-slider"
-        min={0}
-        max={33}
-        scale={scale}
-        marks
-      />
+          )}
+        >
+          {allSizes.map((size) => (
+            <MenuItem key={size} value={size}>
+              <Checkbox checked={sizes.indexOf(size) > -1} />
+              <ListItemText primary={size[0].toUpperCase() + size.slice(1)} />
+            </MenuItem>
+          ))}
+        </Select>
+      </fieldset>
+      <fieldset>
+        <legend>Type</legend>
+        <Select
+          labelId="typesMultiSelect"
+          id="typesMultiSelect"
+          multiple
+          value={types}
+          onChange={updateTypes}
+          input={<Input />}
+          renderValue={(selected) => (
+            <div className={classes.chips}>
+              {selected.map((value) => (
+                <Chip
+                  key={value}
+                  label={value[0].toUpperCase() + value.slice(1)}
+                  className={classes.chip}
+                />
+              ))}
+            </div>
+          )}
+        >
+          {allTypes.map((type) => (
+            <MenuItem key={type} value={type}>
+              <Checkbox checked={types.indexOf(type) > -1} />
+              <ListItemText primary={type[0].toUpperCase() + type.slice(1)} />
+            </MenuItem>
+          ))}
+        </Select>
+      </fieldset>
+      <fieldset>
+        <legend>Challenge Rating</legend>
+        <Slider
+          value={[descale(crRange[0]), descale(crRange[1])]}
+          onChange={(e, value) => {
+            setCrRange([scale(value[0]), scale(value[1])]);
+          }}
+          valueLabelFormat={valueLabelFormat}
+          valueLabelDisplay="auto"
+          aria-labelledby="cr-slider"
+          min={0}
+          max={33}
+          scale={scale}
+          marks
+        />
+      </fieldset>
       <p>Total Results: {filteredMonsters.length}</p>
     </div>
   );
