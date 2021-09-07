@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./styles/App.css";
-import { EncounterBuilder, MonsterPage } from "./pages";
+import { EncounterBuilder } from "./pages";
 
 function App() {
   return (

@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
 import {
   makeStyles,
   Table,
@@ -10,29 +9,34 @@ import {
   TableRow,
   Paper,
   IconButton,
-  CircularProgress,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import Modal from "react-modal";
 
-import { getMonsters } from "../utils/api";
 import { addToEncounter } from "../utils/encounterBuild";
 import { newColumnSort, toggleColumn } from "../utils/tableFunctions";
+import { MonstersContext, EncounterContext } from "../utils/Context";
+import { MonsterModal } from ".";
 
-const MonstersList = ({ setEncounterBuild }) => {
-  const [monsters, setMonsters] = useState([]);
+const MonstersList = () => {
+  const { filteredMonsters, setFilteredMonsters } = useContext(MonstersContext);
   const [monstersSort, setMonstersSort] = useState({
     column: "name",
     order: "asc",
   });
-  const [isLoading, setIsLoading] = useState(true);
+
+  const { setEncounterBuild } = useContext(EncounterContext);
 
   const applySort = (col) => {
     if (monstersSort.column !== col)
-      toggleColumn(col, monstersSort.order, setMonsters, setMonstersSort);
-    else newColumnSort(col, setMonsters, setMonstersSort);
+      toggleColumn(
+        col,
+        monstersSort.order,
+        setFilteredMonsters,
+        setMonstersSort
+      );
+    else newColumnSort(col, setFilteredMonsters, setMonstersSort);
   };
 
   const useStyles = makeStyles({
@@ -45,21 +49,6 @@ const MonstersList = ({ setEncounterBuild }) => {
   });
   const classes = useStyles();
 
-  /* Modal stuff */
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-  };
-
-  // Modal.setAppElement("#yourAppElement");
-
-  let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalData, setModalData] = useState({});
 
@@ -68,37 +57,7 @@ const MonstersList = ({ setEncounterBuild }) => {
     setModalData(data);
   }
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-  /* Finish modal stuff */
-
-  useEffect(() => {
-    setIsLoading(true);
-    getMonsters()
-      .then(({ data: { count } }) => {
-        // Assumes 50 items per page, as per docs https://api.open5e.com/
-        return getMonsters(count);
-      })
-      .then(({ data: { results } }) => {
-        setMonsters(
-          results.map((monster) => {
-            monster.id = monster.slug;
-            return monster;
-          })
-        );
-        setIsLoading(false);
-      });
-  }, []);
-
-  return isLoading ? (
-    <CircularProgress id="listLoading" />
-  ) : (
+  return (
     <>
       <TableContainer
         className={classes.container}
@@ -202,7 +161,7 @@ const MonstersList = ({ setEncounterBuild }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {monsters.map((monster) => (
+            {filteredMonsters.map((monster) => (
               <TableRow key={monster.slug}>
                 <TableCell
                   component="th"
@@ -237,17 +196,11 @@ const MonstersList = ({ setEncounterBuild }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-        <button onClick={closeModal}>close</button>
-        <div>{modalData.name}</div>
-      </Modal>
+      <MonsterModal
+        modalIsOpen={modalIsOpen}
+        setIsOpen={setIsOpen}
+        modalData={modalData}
+      />
     </>
   );
 };
