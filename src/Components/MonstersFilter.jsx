@@ -1,6 +1,8 @@
+import { Slider, Typography } from "@material-ui/core";
 import { memo, useEffect, useState, useContext, useRef } from "react";
 
 import { MonstersContext } from "../utils/Context";
+import { valueLabelFormat, descale, scale } from "../utils/crRange";
 
 const MonstersFilter = () => {
   const { fullMonsters, filteredMonsters, setFilteredMonsters } =
@@ -15,16 +17,25 @@ const MonstersFilter = () => {
     huge: true,
     gargantuan: true,
   });
+  const [crRange, setCrRange] = useState([0, 30]);
 
   useEffect(() => {
     setFilteredMonsters(() => {
-      return fullRef.current.filter(
-        (monster) =>
+      return fullRef.current.filter((monster) => {
+        let cr = monster.challenge_rating;
+        if (cr.indexOf("/") > -1) {
+          cr = 1 / parseInt(cr.slice(-1));
+        } else cr = parseInt(cr);
+
+        return (
           monster.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 &&
-          sizes[monster.size.toLowerCase()]
-      );
+          sizes[monster.size.toLowerCase()] &&
+          cr >= crRange[0] &&
+          cr <= crRange[1]
+        );
+      });
     });
-  }, [sizes, searchTerm, setFilteredMonsters]);
+  }, [searchTerm, sizes, crRange, setFilteredMonsters]);
 
   const updateSizes = (size) => {
     setSizes((currSizes) => {
@@ -61,6 +72,22 @@ const MonstersFilter = () => {
           );
         })}
       </div>
+      <Typography id="cr-slider" gutterBottom>
+        Challenge Rating
+      </Typography>
+      <Slider
+        value={[descale(crRange[0]), descale(crRange[1])]}
+        onChange={(e, value) => {
+          setCrRange([scale(value[0]), scale(value[1])]);
+        }}
+        valueLabelFormat={valueLabelFormat}
+        valueLabelDisplay="auto"
+        aria-labelledby="cr-slider"
+        min={0}
+        max={33}
+        scale={scale}
+        marks
+      />
       <p>Total Results: {filteredMonsters.length}</p>
     </div>
   );
