@@ -12,19 +12,7 @@ import { memo, useEffect, useState, useContext, useRef } from "react";
 
 import { MonstersContext } from "../utils/Context";
 import { valueLabelFormat, descale, scale } from "../utils/crRange";
-
-const useStyles = makeStyles((theme) => ({
-  chips: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  chip: {
-    margin: 2,
-  },
-  selectAllText: {
-    fontWeight: 800,
-  },
-}));
+import { useStyles } from "../utils/makeStyles";
 
 const allSizes = ["tiny", "small", "medium", "large", "huge", "gargantuan"];
 const allTypes = [
@@ -45,6 +33,23 @@ const allTypes = [
   "undead",
 ];
 
+const allAlignments = [
+  "any",
+  "lawful good",
+  "lawful neutral",
+  "lawful evil",
+  "neutral",
+  "neutral good",
+  "neutral evil",
+  "chaotic good",
+  "chaotic neutral",
+  "chaotic evil",
+  "unaligned",
+  "other",
+];
+
+const allLegendary = ["ordinary", "legendary"];
+
 const MonstersFilter = () => {
   const classes = useStyles();
 
@@ -62,6 +67,12 @@ const MonstersFilter = () => {
   const allTypesSelected =
     allTypes.length > 0 && types.length === allTypes.length;
 
+  const [alignments, setAlignments] = useState(allAlignments);
+  const allAlignmentsSelected =
+    allAlignments.length > 0 && alignments.length === allAlignments.length;
+
+  const [legendary, setLegendary] = useState(allLegendary);
+
   const [crRange, setCrRange] = useState([0, 30]);
 
   const updateSizes = (event) => {
@@ -70,7 +81,7 @@ const MonstersFilter = () => {
       setSizes(sizes.length === allSizes.length ? [] : allSizes);
       return;
     }
-    setSizes(event.target.value);
+    setSizes(value);
   };
 
   const updateTypes = (event) => {
@@ -79,7 +90,22 @@ const MonstersFilter = () => {
       setTypes(types.length === allTypes.length ? [] : allTypes);
       return;
     }
-    setTypes(event.target.value);
+    setTypes(value);
+  };
+
+  const updateAlignments = (event) => {
+    const value = event.target.value;
+    if (value[value.length - 1] === "all") {
+      setAlignments(
+        alignments.length === allAlignments.length ? [] : allAlignments
+      );
+      return;
+    }
+    setAlignments(value);
+  };
+
+  const updateLegendary = (event) => {
+    setLegendary(event.target.value);
   };
 
   useEffect(() => {
@@ -94,12 +120,32 @@ const MonstersFilter = () => {
           monster.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 &&
           sizes.includes(monster.size.toLowerCase()) &&
           types.find((type) => monster.type.toLowerCase().indexOf(type) > -1) &&
+          (alignments.find(
+            (alignment) =>
+              monster.alignment.toLowerCase().indexOf(alignment) > -1
+          ) ||
+            (alignments.includes("other") &&
+              !allAlignments.find(
+                (alignment) =>
+                  monster.alignment.toLowerCase().indexOf(alignment) > -1
+              ))) &&
+          ((legendary.includes("legendary") && monster.legendary_desc !== "") ||
+            (legendary.includes("ordinary") &&
+              monster.legendary_desc === "")) &&
           cr >= crRange[0] &&
           cr <= crRange[1]
         );
       });
     });
-  }, [searchTerm, sizes, types, crRange, setFilteredMonsters]);
+  }, [
+    searchTerm,
+    sizes,
+    types,
+    alignments,
+    legendary,
+    crRange,
+    setFilteredMonsters,
+  ]);
 
   return (
     <div id="monstersFilter">
@@ -196,6 +242,86 @@ const MonstersFilter = () => {
             <MenuItem key={type} value={type}>
               <Checkbox checked={types.indexOf(type) > -1} />
               <ListItemText primary={type[0].toUpperCase() + type.slice(1)} />
+            </MenuItem>
+          ))}
+        </Select>
+      </fieldset>
+      <fieldset>
+        <legend>Alignment</legend>
+        <Select
+          labelId="alignmentsMultiSelect"
+          id="alignmentsMultiSelect"
+          multiple
+          value={alignments}
+          onChange={updateAlignments}
+          input={<Input />}
+          renderValue={(selected) => (
+            <div className={classes.chips}>
+              {selected.map((value) => (
+                <Chip
+                  key={value}
+                  label={value[0].toUpperCase() + value.slice(1)}
+                  className={classes.chip}
+                />
+              ))}
+            </div>
+          )}
+        >
+          <MenuItem
+            value="all"
+            classes={{
+              root: allAlignmentsSelected ? classes.selectedAll : "",
+            }}
+          >
+            <Checkbox
+              checked={allAlignmentsSelected}
+              indeterminate={
+                alignments.length > 0 &&
+                alignments.length < allAlignments.length
+              }
+            />
+            <ListItemText
+              primary="Select All"
+              classes={{ primary: classes.selectAllText }}
+            />
+          </MenuItem>
+          {allAlignments.map((alignment) => (
+            <MenuItem key={alignment} value={alignment}>
+              <Checkbox checked={alignments.indexOf(alignment) > -1} />
+              <ListItemText
+                primary={alignment[0].toUpperCase() + alignment.slice(1)}
+              />
+            </MenuItem>
+          ))}
+        </Select>
+      </fieldset>
+      <fieldset>
+        <legend>Legendary Status</legend>
+        <Select
+          labelId="legendaryMultiSelect"
+          id="legendaryMultiSelect"
+          multiple
+          value={legendary}
+          onChange={updateLegendary}
+          input={<Input />}
+          renderValue={(selected) => (
+            <div className={classes.chips}>
+              {selected.map((value) => (
+                <Chip
+                  key={value}
+                  label={value[0].toUpperCase() + value.slice(1)}
+                  className={classes.chip}
+                />
+              ))}
+            </div>
+          )}
+        >
+          {allLegendary.map((legendaryVal) => (
+            <MenuItem key={legendaryVal} value={legendaryVal}>
+              <Checkbox checked={legendary.indexOf(legendaryVal) > -1} />
+              <ListItemText
+                primary={legendaryVal[0].toUpperCase() + legendaryVal.slice(1)}
+              />
             </MenuItem>
           ))}
         </Select>
