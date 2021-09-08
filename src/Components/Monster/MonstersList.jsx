@@ -35,13 +35,13 @@ const MonstersList = () => {
     order: "asc",
   });
 
-  // const [modalIsOpen, setIsOpen] = useState(false);
-  // const [modalData, setModalData] = useState({});
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalData, setModalData] = useState({});
 
-  // function openModal(data) {
-  //   setIsOpen(true);
-  //   setModalData(data);
-  // }
+  function openModal(data) {
+    setIsOpen(true);
+    setModalData(data);
+  }
 
   return (
     <>
@@ -83,9 +83,9 @@ const MonstersList = () => {
                   if (column === "name")
                     return (
                       <TableCell key={column}>
-                        {/* <button onClick={() => openModal(monster)}> */}
-                        {monster[column]}
-                        {/* </button> */}
+                        <button onClick={() => openModal(monster)}>
+                          {monster[column]}
+                        </button>
                       </TableCell>
                     );
                   return <TableCell key={column}>{monster[column]}</TableCell>;
@@ -95,11 +95,11 @@ const MonstersList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* <MonsterModal
+      <MonsterModal
         modalIsOpen={modalIsOpen}
         setIsOpen={setIsOpen}
         modalData={modalData}
-      /> */}
+      />
     </>
   );
 };

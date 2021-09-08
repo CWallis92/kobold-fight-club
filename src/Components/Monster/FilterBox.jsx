@@ -31,19 +31,28 @@ const FilterBox = ({
           updateCategory(event, categoryList, fullCat, setCategory)
         }
         input={<Input />}
-        renderValue={(() => {
-          return (selected) => (
-            <div className={classes.chips}>
-              {selected.map((value) => (
+        renderValue={(selected) => (
+          <div className={classes.chips}>
+            {selected.map((value) => {
+              if (selected.indexOf(value) === 3)
+                return (
+                  <Chip
+                    key={value}
+                    label={`...${selected.length - 3} more`}
+                    className={classes.chip}
+                  />
+                );
+              if (selected.indexOf(value) > 3) return "";
+              return (
                 <Chip
                   key={value}
                   label={value[0].toUpperCase() + value.slice(1)}
                   className={classes.chip}
                 />
-              ))}
-            </div>
-          );
-        })()}
+              );
+            })}
+          </div>
+        )}
       >
         {allSelected !== null && (
           <MenuItem
