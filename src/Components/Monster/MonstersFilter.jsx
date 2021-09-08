@@ -1,9 +1,9 @@
 import { Slider } from "@material-ui/core";
 import { memo, useContext } from "react";
 
-import { FilterBox } from ".";
-import { useFilter } from "../hooks/useFilter";
-import { MonstersContext } from "../utils/contexts";
+import { FilterBox } from "..";
+import { useFilter } from "../../hooks/useFilter";
+import { MonstersContext } from "../../utils/contexts";
 import {
   allSizes,
   allTypes,
@@ -12,7 +12,7 @@ import {
   valueLabelFormat,
   descale,
   scale,
-} from "../utils/monsterListFilters";
+} from "../../utils/monsterListFunctions";
 
 const MonstersFilter = () => {
   const { fullMonsters, filteredMonsters, setFilteredMonsters } =

@@ -1,4 +1,4 @@
-import { EncounterMonsters } from ".";
+import { EncounterMonsters } from "..";
 
 const EncounterBuild = ({ encounterBuild, setEncounterBuild }) => {
   return (

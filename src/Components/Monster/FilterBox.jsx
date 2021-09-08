@@ -6,9 +6,9 @@ import {
   Checkbox,
   ListItemText,
 } from "@material-ui/core";
-import { useStyles } from "../utils/makeStyles";
+import { useStyles } from "../../styles/makeStyles";
 
-import { updateCategory } from "../utils/monsterListFilters";
+import { updateCategory } from "../../utils/monsterListFunctions";
 
 const FilterBox = ({ category, fullCat, setCategory, allSelected }) => {
   const classes = useStyles();

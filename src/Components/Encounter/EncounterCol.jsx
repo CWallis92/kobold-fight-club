@@ -5,8 +5,8 @@ import {
   EncounterRandomizer,
   EncounterBuild,
   EncounterTotal,
-} from ".";
-import { EncounterContext } from "../utils/contexts";
+} from "..";
+import { EncounterContext } from "../../utils/contexts";
 
 const EncounterCol = () => {
   const { encounterBuild, setEncounterBuild } = useContext(EncounterContext);

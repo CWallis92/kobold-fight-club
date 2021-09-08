@@ -3,7 +3,10 @@ import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { useEffect, useState } from "react";
 
-import { addToEncounter, resetEncounterMonster } from "../utils/encounterBuild";
+import {
+  addToEncounter,
+  resetEncounterMonster,
+} from "../../utils/encounterBuild";
 
 const EncounterMonsters = ({ monster, setEncounterBuild }) => {
   const [monsterCount, setMonsterCount] = useState(monster.count);

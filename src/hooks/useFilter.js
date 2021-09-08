@@ -5,7 +5,7 @@ import {
   allTypes,
   allAlignments,
   allLegendary,
-} from "../utils/monsterListFilters";
+} from "../utils/monsterListFunctions";
 
 export const useFilter = (fullMonsters, setFilteredMonsters) => {
   const fullRef = useRef(fullMonsters);

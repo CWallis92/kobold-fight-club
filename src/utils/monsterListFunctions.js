@@ -123,3 +123,57 @@ export const scale = (value) => {
   const dX = value - crs[crIndex - 1].value;
   return m * dX + crs[crIndex - 1].scaledValue;
 };
+
+const toggleColumn = (col, order, setMonsters, setMonstersSort) => {
+  setMonstersSort({
+    column: col,
+    order: order === "asc" ? "desc" : "asc",
+  });
+  setMonsters((currList) => {
+    const newList = JSON.parse(JSON.stringify(currList));
+    return newList.reverse();
+  });
+};
+
+const crConvert = (value) => {
+  switch (value) {
+    case "1/8":
+      return 0.125;
+    case "1/4":
+      return 0.25;
+    case "1/2":
+      return 0.5;
+    default:
+      return parseInt(value);
+  }
+};
+
+const newColumnSort = (col, setMonsters, setMonstersSort) => {
+  setMonstersSort({
+    column: col,
+    order: "asc",
+  });
+  setMonsters((currList) => {
+    const newList = JSON.parse(JSON.stringify(currList));
+    return newList.sort((a, b) => {
+      if (col === "challenge_rating") {
+        let first = crConvert(a[col]);
+        let second = crConvert(b[col]);
+        return second - first;
+      }
+      if (a[col].toLowerCase() < b[col].toLowerCase()) return -1;
+      return 1;
+    });
+  });
+};
+
+export const applySort = (
+  { column, order },
+  columnToSort,
+  setList,
+  setSort
+) => {
+  if (column === columnToSort)
+    toggleColumn(columnToSort, order, setList, setSort);
+  else newColumnSort(columnToSort, setList, setSort);
+};

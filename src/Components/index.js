@@ -1,14 +1,15 @@
-import EncounterCol from "./EncounterCol";
-import MonstersCol from "./MonstersCol";
-import EncounterParty from "./EncounterParty";
-import EncounterRandomizer from "./EncounterRandomizer";
-import EncounterBuild from "./EncounterBuild";
-import EncounterMonsters from "./EncounterMonsters";
-import EncounterTotal from "./EncounterTotal";
-import MonstersFilter from "./MonstersFilter";
-import FilterBox from "./FilterBox";
-import MonstersList from "./MonstersList";
-import MonsterModal from "./MonsterModal";
+import EncounterCol from "./Encounter/EncounterCol";
+import MonstersCol from "./Monster/MonstersCol";
+import EncounterParty from "./Encounter/EncounterParty";
+import EncounterRandomizer from "./Encounter/EncounterRandomizer";
+import EncounterBuild from "./Encounter/EncounterBuild";
+import EncounterMonsters from "./Encounter/EncounterMonsters";
+import EncounterTotal from "./Encounter/EncounterTotal";
+import MonstersFilter from "./Monster/MonstersFilter";
+import FilterBox from "./Monster/FilterBox";
+import MonstersList from "./Monster/MonstersList";
+import MonsterTableHeader from "./Monster/MonsterTableHeader";
+import MonsterModal from "./Monster/MonsterModal";
 
 export {
   EncounterCol,
@@ -21,5 +22,6 @@ export {
   MonstersFilter,
   FilterBox,
   MonstersList,
+  MonsterTableHeader,
   MonsterModal,
 };
