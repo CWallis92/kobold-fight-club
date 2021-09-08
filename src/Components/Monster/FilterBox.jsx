@@ -10,19 +10,25 @@ import { useStyles } from "../../styles/makeStyles";
 
 import { updateCategory } from "../../utils/monsterListFunctions";
 
-const FilterBox = ({ category, fullCat, setCategory, allSelected }) => {
+const FilterBox = ({
+  categoryName,
+  categoryList,
+  fullCat,
+  setCategory,
+  allSelected,
+}) => {
   const classes = useStyles();
 
   return (
     <fieldset>
-      <legend>Size</legend>
+      <legend>{categoryName}</legend>
       <Select
-        labelId={`${category}MultiSelect`}
-        id={`${category}MultiSelect`}
+        labelId={`${categoryName.toLowerCase().replace(" ", "")}MultiSelect`}
+        id={`${categoryName.toLowerCase().replace(" ", "")}MultiSelect`}
         multiple
-        value={category}
+        value={categoryList}
         onChange={(event) =>
-          updateCategory(event, category, fullCat, setCategory)
+          updateCategory(event, categoryList, fullCat, setCategory)
         }
         input={<Input />}
         renderValue={(() => {
@@ -49,7 +55,7 @@ const FilterBox = ({ category, fullCat, setCategory, allSelected }) => {
             <Checkbox
               checked={allSelected}
               indeterminate={
-                category.length > 0 && category.length < fullCat.length
+                categoryList.length > 0 && categoryList.length < fullCat.length
               }
             />
             <ListItemText
@@ -60,7 +66,7 @@ const FilterBox = ({ category, fullCat, setCategory, allSelected }) => {
         )}
         {fullCat.map((item) => (
           <MenuItem key={item} value={item}>
-            <Checkbox checked={category.indexOf(item) > -1} />
+            <Checkbox checked={categoryList.indexOf(item) > -1} />
             <ListItemText primary={item[0].toUpperCase() + item.slice(1)} />
           </MenuItem>
         ))}

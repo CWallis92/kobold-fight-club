@@ -48,25 +48,29 @@ const MonstersFilter = () => {
         />
       </fieldset>
       <FilterBox
-        category={sizes}
+        categoryName={"Size"}
+        categoryList={sizes}
         fullCat={allSizes}
         setCategory={setSizes}
         allSelected={allSizesSelected}
       />
       <FilterBox
-        category={types}
+        categoryName={"Type"}
+        categoryList={types}
         fullCat={allTypes}
         setCategory={setTypes}
         allSelected={allTypesSelected}
       />
       <FilterBox
-        category={alignments}
+        categoryName={"Alignment"}
+        categoryList={alignments}
         fullCat={allAlignments}
         setCategory={setAlignments}
         allSelected={allAlignmentsSelected}
       />
       <FilterBox
-        category={legendary}
+        categoryName={"Legendary Status"}
+        categoryList={legendary}
         fullCat={allLegendary}
         setCategory={setLegendary}
         allSelected={null}
