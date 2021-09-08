@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   chip: {
     margin: 2,
   },
+  selectAllText: {
+    fontWeight: 800,
+  },
 }));
 
 const allSizes = ["tiny", "small", "medium", "large", "huge", "gargantuan"];
@@ -50,15 +53,32 @@ const MonstersFilter = () => {
   const fullRef = useRef(fullMonsters);
 
   const [searchTerm, setSearchTerm] = useState("");
+
   const [sizes, setSizes] = useState(allSizes);
+  const allSizesSelected =
+    allSizes.length > 0 && sizes.length === allSizes.length;
+
   const [types, setTypes] = useState(allTypes);
+  const allTypesSelected =
+    allTypes.length > 0 && types.length === allTypes.length;
+
   const [crRange, setCrRange] = useState([0, 30]);
 
   const updateSizes = (event) => {
+    const value = event.target.value;
+    if (value[value.length - 1] === "all") {
+      setSizes(sizes.length === allSizes.length ? [] : allSizes);
+      return;
+    }
     setSizes(event.target.value);
   };
 
   const updateTypes = (event) => {
+    const value = event.target.value;
+    if (value[value.length - 1] === "all") {
+      setTypes(types.length === allTypes.length ? [] : allTypes);
+      return;
+    }
     setTypes(event.target.value);
   };
 
@@ -113,6 +133,21 @@ const MonstersFilter = () => {
             </div>
           )}
         >
+          <MenuItem
+            value="all"
+            classes={{
+              root: allSizesSelected ? classes.selectedAll : "",
+            }}
+          >
+            <Checkbox
+              checked={allSizesSelected}
+              indeterminate={sizes.length > 0 && sizes.length < allSizes.length}
+            />
+            <ListItemText
+              primary="Select All"
+              classes={{ primary: classes.selectAllText }}
+            />
+          </MenuItem>
           {allSizes.map((size) => (
             <MenuItem key={size} value={size}>
               <Checkbox checked={sizes.indexOf(size) > -1} />
@@ -142,6 +177,21 @@ const MonstersFilter = () => {
             </div>
           )}
         >
+          <MenuItem
+            value="all"
+            classes={{
+              root: allTypesSelected ? classes.selectedAll : "",
+            }}
+          >
+            <Checkbox
+              checked={allTypesSelected}
+              indeterminate={types.length > 0 && types.length < allTypes.length}
+            />
+            <ListItemText
+              primary="Select All"
+              classes={{ primary: classes.selectAllText }}
+            />
+          </MenuItem>
           {allTypes.map((type) => (
             <MenuItem key={type} value={type}>
               <Checkbox checked={types.indexOf(type) > -1} />
