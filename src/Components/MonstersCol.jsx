@@ -1,35 +1,13 @@
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import { CircularProgress } from "@material-ui/core";
 
 import { MonstersFilter, MonstersList } from ".";
-import { getMonsters } from "../utils/api";
-import { MonstersContext } from "../utils/Context";
+import { MonstersContext } from "../utils/contexts";
+import { useMonsters } from "../hooks/useMonsters";
 
 const MonstersCol = () => {
-  const [fullMonsters, setFullMonsters] = useState([]);
-  const [filteredMonsters, setFilteredMonsters] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    getMonsters()
-      .then(({ data: { count } }) => {
-        // Assumes 50 items per page, as per docs https://api.open5e.com/
-        return getMonsters(count);
-      })
-      .then(({ data: { results } }) => {
-        setFullMonsters(
-          results.map((monster) => {
-            monster.id = monster.slug;
-            return monster;
-          })
-        );
-        setIsLoading(false);
-      });
-  }, []);
-
-  useEffect(() => {
-    setFilteredMonsters(fullMonsters);
-  }, [fullMonsters]);
+  const { fullMonsters, filteredMonsters, setFilteredMonsters, isLoading } =
+    useMonsters();
 
   return (
     <MonstersContext.Provider

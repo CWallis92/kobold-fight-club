@@ -1,22 +1,21 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useState } from "react";
 
+import { EncounterCol, MonstersCol } from "./Components";
+import { EncounterContext } from "./utils/contexts";
 import "./styles/App.css";
-import { EncounterBuilder } from "./pages";
 
 function App() {
+  const [encounterBuild, setEncounterBuild] = useState([]);
+
   return (
-    <Router>
+    <EncounterContext.Provider value={{ encounterBuild, setEncounterBuild }}>
       <div className="App">
-        <Switch>
-          <Route exact path="/">
-            <EncounterBuilder />
-          </Route>
-          {/* <Route path="/:monster_name">
-            <MonsterPage />
-          </Route> */}
-        </Switch>
+        <main>
+          <EncounterCol />
+          <MonstersCol />
+        </main>
       </div>
-    </Router>
+    </EncounterContext.Provider>
   );
 }
 

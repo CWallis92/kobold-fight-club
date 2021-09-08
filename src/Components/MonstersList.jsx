@@ -16,7 +16,7 @@ import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 
 import { addToEncounter } from "../utils/encounterBuild";
 import { newColumnSort, toggleColumn } from "../utils/tableFunctions";
-import { MonstersContext, EncounterContext } from "../utils/Context";
+import { MonstersContext, EncounterContext } from "../utils/contexts";
 import { MonsterModal } from ".";
 
 const MonstersList = () => {

@@ -6,7 +6,7 @@ import {
   EncounterBuild,
   EncounterTotal,
 } from ".";
-import { EncounterContext } from "../utils/Context";
+import { EncounterContext } from "../utils/contexts";
 
 const EncounterCol = () => {
   const { encounterBuild, setEncounterBuild } = useContext(EncounterContext);

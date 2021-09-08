@@ -6,6 +6,7 @@ import EncounterBuild from "./EncounterBuild";
 import EncounterMonsters from "./EncounterMonsters";
 import EncounterTotal from "./EncounterTotal";
 import MonstersFilter from "./MonstersFilter";
+import FilterBox from "./FilterBox";
 import MonstersList from "./MonstersList";
 import MonsterModal from "./MonsterModal";
 
@@ -18,6 +19,7 @@ export {
   EncounterMonsters,
   EncounterTotal,
   MonstersFilter,
+  FilterBox,
   MonstersList,
   MonsterModal,
 };

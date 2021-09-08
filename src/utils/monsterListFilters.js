@@ -1,3 +1,56 @@
+export const allSizes = [
+  "tiny",
+  "small",
+  "medium",
+  "large",
+  "huge",
+  "gargantuan",
+];
+
+export const allTypes = [
+  "aberration",
+  "beast", // Make sure beasts are included
+  "celestial",
+  "construct", // Make sure constructs are included
+  "dragon",
+  "elemental",
+  "fey",
+  "fiend",
+  "giant",
+  "humanoid",
+  "monstrosity",
+  "ooze",
+  "plant",
+  "swarm",
+  "undead",
+];
+
+export const allAlignments = [
+  "any",
+  "lawful good",
+  "lawful neutral",
+  "lawful evil",
+  "neutral",
+  "neutral good",
+  "neutral evil",
+  "chaotic good",
+  "chaotic neutral",
+  "chaotic evil",
+  "unaligned",
+  "other",
+];
+
+export const allLegendary = ["ordinary", "legendary"];
+
+export const updateCategory = (event, list, fullList, callback) => {
+  const value = event.target.value;
+  if (value[value.length - 1] === "all") {
+    callback(list.length === fullList.length ? [] : fullList);
+    return;
+  }
+  callback(value);
+};
+
 const crs = [
   {
     label: "0",
