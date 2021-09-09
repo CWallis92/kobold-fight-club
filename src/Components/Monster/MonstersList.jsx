@@ -19,7 +19,12 @@ import { addToEncounter } from "../../utils/encounterBuild";
 const MonstersList = () => {
   const classes = useStyles();
 
-  const { filteredMonsters, setFilteredMonsters } = useContext(MonstersContext);
+  const {
+    filteredMonsters,
+    setFilteredMonsters,
+    monstersSort,
+    setMonstersSort,
+  } = useContext(MonstersContext);
   const { setEncounterBuild } = useContext(EncounterContext);
 
   const columns = {
@@ -29,11 +34,6 @@ const MonstersList = () => {
     type: "Type",
     alignment: "Alignment",
   };
-
-  const [monstersSort, setMonstersSort] = useState({
-    column: "name",
-    order: "asc",
-  });
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalData, setModalData] = useState({});

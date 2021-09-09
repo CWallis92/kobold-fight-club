@@ -6,6 +6,11 @@ export const useMonsters = () => {
   const [filteredMonsters, setFilteredMonsters] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [monstersSort, setMonstersSort] = useState({
+    column: "name",
+    order: "asc",
+  });
+
   useEffect(() => {
     getMonsters()
       .then(({ data: { count } }) => {
@@ -32,5 +37,7 @@ export const useMonsters = () => {
     filteredMonsters,
     setFilteredMonsters,
     isLoading,
+    monstersSort,
+    setMonstersSort,
   };
 };

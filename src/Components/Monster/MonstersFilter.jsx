@@ -15,7 +15,7 @@ import {
 } from "../../utils/monsterListFunctions";
 
 const MonstersFilter = () => {
-  const { fullMonsters, filteredMonsters, setFilteredMonsters } =
+  const { fullMonsters, filteredMonsters, setFilteredMonsters, monstersSort } =
     useContext(MonstersContext);
 
   const {
@@ -34,7 +34,7 @@ const MonstersFilter = () => {
     setLegendary,
     crRange,
     setCrRange,
-  } = useFilter(fullMonsters, setFilteredMonsters);
+  } = useFilter(fullMonsters, setFilteredMonsters, monstersSort);
 
   return (
     <div id="monstersFilter">

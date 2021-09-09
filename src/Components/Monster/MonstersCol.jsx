@@ -6,12 +6,24 @@ import { MonstersContext } from "../../utils/contexts";
 import { useMonsters } from "../../hooks/useMonsters";
 
 const MonstersCol = () => {
-  const { fullMonsters, filteredMonsters, setFilteredMonsters, isLoading } =
-    useMonsters();
+  const {
+    fullMonsters,
+    filteredMonsters,
+    setFilteredMonsters,
+    isLoading,
+    monstersSort,
+    setMonstersSort,
+  } = useMonsters();
 
   return (
     <MonstersContext.Provider
-      value={{ fullMonsters, filteredMonsters, setFilteredMonsters }}
+      value={{
+        fullMonsters,
+        filteredMonsters,
+        setFilteredMonsters,
+        monstersSort,
+        setMonstersSort,
+      }}
     >
       <div id="rightCol" className="col">
         {isLoading ? (

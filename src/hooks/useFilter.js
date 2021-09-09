@@ -1,13 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 
+import { MonstersContext } from "../utils/contexts";
 import {
   allSizes,
   allTypes,
   allAlignments,
   allLegendary,
+  listSort,
 } from "../utils/monsterListFunctions";
 
-export const useFilter = (fullMonsters, setFilteredMonsters) => {
+export const useFilter = () => {
+  const { fullMonsters, setFilteredMonsters, monstersSort } =
+    useContext(MonstersContext);
   const fullRef = useRef(fullMonsters);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,7 +34,7 @@ export const useFilter = (fullMonsters, setFilteredMonsters) => {
 
   useEffect(() => {
     setFilteredMonsters(() => {
-      return fullRef.current.filter((monster) => {
+      const newFiltered = fullRef.current.filter((monster) => {
         let cr = monster.challenge_rating;
         if (cr.indexOf("/") > -1) {
           cr = 1 / parseInt(cr.slice(-1));
@@ -66,16 +70,12 @@ export const useFilter = (fullMonsters, setFilteredMonsters) => {
           crFilter
         );
       });
+      return monstersSort.order === "asc"
+        ? listSort(null, monstersSort.column, newFiltered)
+        : listSort(null, monstersSort.column, newFiltered).reverse();
     });
-  }, [
-    searchTerm,
-    sizes,
-    types,
-    alignments,
-    legendary,
-    crRange,
-    setFilteredMonsters,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm, sizes, types, alignments, legendary, crRange]);
 
   return {
     searchTerm,
