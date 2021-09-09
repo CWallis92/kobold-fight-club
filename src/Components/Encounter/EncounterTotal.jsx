@@ -1,4 +1,4 @@
-const EncounterTotal = ({ encounterBuild }) => {
+const EncounterTotal = ({ encounterBuild, party, difficulty }) => {
   const totalXP = encounterBuild.reduce(
     (init, next) => init + next.xp * next.count,
     0
@@ -37,12 +37,36 @@ const EncounterTotal = ({ encounterBuild }) => {
       break;
   }
 
+  const adjustedXP = totalXP * multiplier;
+
+  let encounterDiff = "*Yawns*";
+  switch (true) {
+    case adjustedXP >= difficulty.deadly:
+      encounterDiff = "Deadly";
+      break;
+    case adjustedXP >= difficulty.hard:
+      encounterDiff = "Hard";
+      break;
+    case adjustedXP >= difficulty.medium:
+      encounterDiff = "Medium";
+      break;
+    case adjustedXP >= difficulty.easy:
+      encounterDiff = "Easy";
+      break;
+    default:
+      break;
+  }
+
+  const partySize = party.reduce((prev, curr) => prev + curr[1], 0);
+
   return (
     <div id="encounterTotal">
-      <p>Difficulty: XX</p>
+      <p>Difficulty: {encounterDiff}</p>
       <div id="xpTotals">
         <p>Total XP: {totalXP}</p>
-        <p>Adjusted XP: {totalXP * multiplier}</p>
+        <p>{Math.ceil(totalXP / partySize)} per player</p>
+        <p>Adjusted XP: {adjustedXP}</p>
+        <p>{Math.ceil(adjustedXP / partySize)} per player</p>
       </div>
     </div>
   );

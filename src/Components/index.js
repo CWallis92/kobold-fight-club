@@ -9,7 +9,6 @@ import MonstersFilter from "./Monster/MonstersFilter";
 import FilterBox from "./Monster/FilterBox";
 import MonstersList from "./Monster/MonstersList";
 import MonsterTableHeader from "./Monster/MonsterTableHeader";
-import MonsterModal from "./Monster/MonsterModal";
 
 export {
   EncounterCol,
@@ -23,5 +22,4 @@ export {
   FilterBox,
   MonstersList,
   MonsterTableHeader,
-  MonsterModal,
 };

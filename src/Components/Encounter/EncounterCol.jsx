@@ -6,14 +6,21 @@ import {
   EncounterBuild,
   EncounterTotal,
 } from "..";
+import useParty from "../../hooks/useParty";
 import { EncounterContext } from "../../utils/contexts";
 
 const EncounterCol = () => {
   const { encounterBuild, setEncounterBuild } = useContext(EncounterContext);
 
+  const { party, setParty, difficulty } = useParty();
+
   return (
     <div id="leftCol" className="col">
-      <EncounterParty />
+      <EncounterParty
+        party={party}
+        setParty={setParty}
+        difficulty={difficulty}
+      />
       <h2>Encounter</h2>
       <EncounterRandomizer setEncounterBuild={setEncounterBuild} />
       {encounterBuild.length === 0 && <p>Start adding some monsters</p>}
@@ -23,7 +30,11 @@ const EncounterCol = () => {
             encounterBuild={encounterBuild}
             setEncounterBuild={setEncounterBuild}
           />
-          <EncounterTotal encounterBuild={encounterBuild} />
+          <EncounterTotal
+            encounterBuild={encounterBuild}
+            party={party}
+            difficulty={difficulty}
+          />
         </>
       )}
     </div>
