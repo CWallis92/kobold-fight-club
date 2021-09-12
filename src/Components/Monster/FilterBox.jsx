@@ -5,9 +5,11 @@ import {
   MenuItem,
   Checkbox,
   ListItemText,
+  InputLabel,
+  FormControl,
 } from "@material-ui/core";
-import { useStyles } from "../../styles/MonsterList";
 
+import { useStyles } from "../../styles/MonsterFilter";
 import { updateCategory } from "../../utils/monsterListFunctions";
 
 const FilterBox = ({
@@ -20,10 +22,12 @@ const FilterBox = ({
   const classes = useStyles();
 
   return (
-    <fieldset>
-      <legend>{categoryName}</legend>
+    <FormControl className={classes.formControl}>
+      <InputLabel id={categoryName.toLowerCase().replace(" ", "")}>
+        {categoryName}
+      </InputLabel>
       <Select
-        labelId={`${categoryName.toLowerCase().replace(" ", "")}MultiSelect`}
+        labelId={categoryName.toLowerCase().replace(" ", "")}
         id={`${categoryName.toLowerCase().replace(" ", "")}MultiSelect`}
         multiple
         value={categoryList}
@@ -33,24 +37,28 @@ const FilterBox = ({
         input={<Input />}
         renderValue={(selected) => (
           <div className={classes.chips}>
-            {selected.map((value) => {
-              if (selected.indexOf(value) === 3)
+            {selected.length === fullCat.length ? (
+              <Chip label={`Any ${categoryName}`} className={classes.chip} />
+            ) : (
+              selected.map((value) => {
+                if (selected.indexOf(value) === 3)
+                  return (
+                    <Chip
+                      key={value}
+                      label={`...${selected.length - 3} more`}
+                      className={classes.chip}
+                    />
+                  );
+                if (selected.indexOf(value) > 3) return "";
                 return (
                   <Chip
                     key={value}
-                    label={`...${selected.length - 3} more`}
+                    label={value[0].toUpperCase() + value.slice(1)}
                     className={classes.chip}
                   />
                 );
-              if (selected.indexOf(value) > 3) return "";
-              return (
-                <Chip
-                  key={value}
-                  label={value[0].toUpperCase() + value.slice(1)}
-                  className={classes.chip}
-                />
-              );
-            })}
+              })
+            )}
           </div>
         )}
       >
@@ -80,7 +88,7 @@ const FilterBox = ({
           </MenuItem>
         ))}
       </Select>
-    </fieldset>
+    </FormControl>
   );
 };
 

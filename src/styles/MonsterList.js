@@ -8,15 +8,4 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     maxHeight: "70vh",
   },
-  //Filter
-  chips: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  chip: {
-    margin: 2,
-  },
-  selectAllText: {
-    fontWeight: 800,
-  },
 }));

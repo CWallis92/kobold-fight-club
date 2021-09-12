@@ -4,8 +4,19 @@ import { CircularProgress } from "@material-ui/core";
 import { MonstersFilter, MonstersList } from "..";
 import { MonstersContext } from "../../utils/contexts";
 import { useMonsters } from "../../hooks/useMonsters";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+  loading: {
+    position: "absolute",
+    top: "50%",
+    right: "50%",
+  },
+});
 
 const MonstersCol = () => {
+  const classes = useStyles();
+
   const {
     fullMonsters,
     filteredMonsters,
@@ -25,16 +36,14 @@ const MonstersCol = () => {
         setMonstersSort,
       }}
     >
-      <div>
-        {isLoading ? (
-          <CircularProgress id="listLoading" />
-        ) : (
-          <>
-            <MonstersFilter />
-            <MonstersList />
-          </>
-        )}
-      </div>
+      {isLoading ? (
+        <CircularProgress className={classes.loading} />
+      ) : (
+        <>
+          <MonstersFilter />
+          <MonstersList />
+        </>
+      )}
     </MonstersContext.Provider>
   );
 };
