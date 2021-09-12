@@ -5,20 +5,8 @@
   right: 50%;
 }
 
-.encounterMonster {
-  display: flex;
-}
-
-.encounterMonster > * {
-  margin: 0 1em;
-}
-
 #monstersFilter {
   padding: 1em;
-}
-
-#encounterBuild { 
-  padding-top: 1em;
 }
 
 .headerColumn {
@@ -27,8 +15,4 @@
 
 table .MuiSvgIcon-root {
   float: right;
-}
-
-#xpTotals{
-  text-align: right;
 }

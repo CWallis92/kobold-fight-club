@@ -15,10 +15,10 @@ function App() {
       <EncounterContext.Provider value={{ encounterBuild, setEncounterBuild }}>
         <div className="App">
           <Grid container spacing={1}>
-            <Grid item sm={12} md={5} lg={4}>
+            <Grid item xs={12} sm={12} md={5} lg={4}>
               <EncounterCol />
             </Grid>
-            <Grid item sm={12} md={7} lg={8}>
+            <Grid item xs={12} sm={12} md={7} lg={8}>
               <MonstersCol />
             </Grid>
           </Grid>

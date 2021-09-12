@@ -2,7 +2,7 @@ import { EncounterMonsters } from "..";
 
 const EncounterBuild = ({ encounterBuild, setEncounterBuild }) => {
   return (
-    <section id="encounterBuild">
+    <>
       {encounterBuild.map((monster) => {
         return (
           <EncounterMonsters
@@ -12,7 +12,7 @@ const EncounterBuild = ({ encounterBuild, setEncounterBuild }) => {
           />
         );
       })}
-    </section>
+    </>
   );
 };
 
