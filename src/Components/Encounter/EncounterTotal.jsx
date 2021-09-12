@@ -1,4 +1,9 @@
+import { Grid, Typography } from "@material-ui/core";
+import { useStyles } from "../../styles/EncounterTotal";
+
 const EncounterTotal = ({ encounterBuild, party, difficulty }) => {
+  const classes = useStyles();
+
   const totalXP = encounterBuild.reduce(
     (init, next) => init + next.xp * next.count,
     0
@@ -60,15 +65,30 @@ const EncounterTotal = ({ encounterBuild, party, difficulty }) => {
   const partySize = party.reduce((prev, curr) => prev + curr[1], 0);
 
   return (
-    <div id="encounterTotal">
-      <p>Difficulty: {encounterDiff}</p>
-      <div id="xpTotals">
-        <p>Total XP: {totalXP}</p>
-        <p>{Math.ceil(totalXP / partySize)} per player</p>
-        <p>Adjusted XP: {adjustedXP}</p>
-        <p>{Math.ceil(adjustedXP / partySize)} per player</p>
-      </div>
-    </div>
+    <Grid
+      container
+      justifyContent="space-between"
+      className={classes.container}
+    >
+      <Grid item>
+        <Typography variant="h5">Difficulty: {encounterDiff}</Typography>
+      </Grid>
+      <Grid item>
+        <Typography variant="h6" align="right">
+          Total XP: {totalXP.toLocaleString("en-US")}
+        </Typography>
+        <Typography variant="body2" align="right">
+          ({Math.ceil(totalXP / partySize).toLocaleString("en-US")} per player)
+        </Typography>
+        <Typography variant="h6" align="right">
+          Adjusted XP: {adjustedXP.toLocaleString("en-US")}
+        </Typography>
+        <Typography variant="body2" align="right">
+          ({Math.ceil(adjustedXP / partySize).toLocaleString("en-US")} per
+          player)
+        </Typography>
+      </Grid>
+    </Grid>
   );
 };
 

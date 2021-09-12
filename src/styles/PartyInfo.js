@@ -7,6 +7,7 @@ export const useStyles = makeStyles({
     minHeight: "150px",
     paddingBottom: "1em",
     borderBottom: `1px solid ${theme.palette.primary.main}`,
+    marginBottom: "1em",
   },
   xpInfo: {
     marginTop: "15px",

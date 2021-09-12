@@ -1,3 +1,4 @@
+import { Typography } from "@material-ui/core";
 import { useContext } from "react";
 
 import {
@@ -21,9 +22,13 @@ const EncounterCol = () => {
         setParty={setParty}
         difficulty={difficulty}
       />
-      <h2>Encounter</h2>
+      <Typography variant="h5" gutterBottom>
+        Encounter
+      </Typography>
       <EncounterRandomizer setEncounterBuild={setEncounterBuild} />
-      {encounterBuild.length === 0 && <p>Start adding some monsters</p>}
+      {encounterBuild.length === 0 && (
+        <Typography variant="body1">Start adding some monsters</Typography>
+      )}
       {encounterBuild.length > 0 && (
         <>
           <EncounterBuild

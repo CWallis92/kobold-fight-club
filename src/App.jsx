@@ -14,11 +14,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <EncounterContext.Provider value={{ encounterBuild, setEncounterBuild }}>
         <div className="App">
-          <Grid container>
-            <Grid item sm={12} md={3}>
+          <Grid container spacing={1}>
+            <Grid item sm={12} md={5} lg={4}>
               <EncounterCol />
             </Grid>
-            <Grid item sm={12} md={9}>
+            <Grid item sm={12} md={7} lg={8}>
               <MonstersCol />
             </Grid>
           </Grid>
