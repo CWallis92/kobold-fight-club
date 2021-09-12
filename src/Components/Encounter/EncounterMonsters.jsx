@@ -28,7 +28,6 @@ const EncounterMonsters = ({ monster, setEncounterBuild }) => {
               addToEncounter(-1, monster, currEncounterBuild)
             );
           }}
-          color="secondary"
         >
           <RemoveIcon />
         </Button>
@@ -57,7 +56,6 @@ const EncounterMonsters = ({ monster, setEncounterBuild }) => {
               addToEncounter(1, monster, currEncounterBuild)
             );
           }}
-          color="secondary"
         >
           <AddIcon />
         </Button>

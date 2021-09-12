@@ -6,7 +6,7 @@ import {
   Checkbox,
   ListItemText,
 } from "@material-ui/core";
-import { useStyles } from "../../styles/makeStyles";
+import { useStyles } from "../../styles/MonsterList";
 
 import { updateCategory } from "../../utils/monsterListFunctions";
 

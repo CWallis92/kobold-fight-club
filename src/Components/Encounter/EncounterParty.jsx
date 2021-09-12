@@ -1,8 +1,21 @@
 import { Fragment } from "react";
+import {
+  Grid,
+  MenuItem,
+  Select,
+  Typography,
+  Button,
+  IconButton,
+} from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import AddIcon from "@material-ui/icons/Add";
 
 import { budgets } from "../../utils/characterXPThresholds";
+import { useStyles } from "../../styles/PartyInfo";
 
 const EncounterParty = ({ party, setParty, difficulty }) => {
+  const classes = useStyles();
+
   const partyBudget = party.reduce((prev, curr) => {
     return prev + budgets[curr[0]] * curr[1];
   }, 0);
@@ -14,10 +27,10 @@ const EncounterParty = ({ party, setParty, difficulty }) => {
       return newParty;
     });
   };
-  const removeRows = () => {
+  const removeRows = (row) => {
     setParty((currParty) => {
       const newParty = JSON.parse(JSON.stringify(currParty));
-      newParty.pop();
+      newParty.splice(row, 1);
       return newParty;
     });
   };
@@ -39,48 +52,93 @@ const EncounterParty = ({ party, setParty, difficulty }) => {
   };
 
   return (
-    <section id="encounterParty">
-      <span>No. of Players</span>
-      <span>Level</span>
-      <br />
-      {party.map((row, rowIndex) => {
-        return (
-          <Fragment key={rowIndex}>
-            <select
-              className="partySize"
-              value={party[rowIndex][1]}
-              onChange={(event) => updateAmount(event, rowIndex)}
-            >
-              {[...Array(12).keys()].map((item) => (
-                <option key={item + 1} value={item + 1}>
-                  {item + 1}
-                </option>
-              ))}
-            </select>
-            <select
-              className="partyLevel"
-              value={party[rowIndex][0]}
-              onChange={(event) => updateLevel(event, rowIndex)}
-            >
-              {[...Array(20).keys()].map((item) => (
-                <option key={item + 1} value={item + 1}>
-                  {item + 1}
-                </option>
-              ))}
-            </select>
-            {rowIndex > 0 && <button onClick={removeRows}>➖</button>}
-            <br />
-          </Fragment>
-        );
-      })}
-      {party.length < 10 && <button onClick={addRows}>➕</button>}
-      {Object.keys(difficulty).map((item) => (
-        <p key={item}>
-          {item[0].toUpperCase() + item.slice(1)}: {difficulty[item]}XP
-        </p>
-      ))}
-      <p>Daily budget: {partyBudget}XP</p>
-    </section>
+    <Grid container className={classes.container}>
+      <Grid item xs={6}>
+        <Typography variant="h5" gutterBottom>
+          Group Info
+        </Typography>
+        <Grid container spacing={1}>
+          <Grid item xs={5}>
+            <Typography variant="body1">Players</Typography>
+          </Grid>
+          <Grid item xs={5}>
+            <Typography variant="body1">Level</Typography>
+          </Grid>
+          <Grid item xs={2}></Grid>
+          {party.map((row, rowIndex) => {
+            return (
+              <Fragment key={rowIndex}>
+                <Grid item xs={5}>
+                  <Select
+                    value={party[rowIndex][1]}
+                    onChange={(event) => updateAmount(event, rowIndex)}
+                    className={classes.dropdownSize}
+                  >
+                    {[...Array(12).keys()].map((item) => (
+                      <MenuItem key={item + 1} value={item + 1}>
+                        {item + 1}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Grid>
+                <Grid item xs={5}>
+                  <Select
+                    value={party[rowIndex][0]}
+                    onChange={(event) => updateLevel(event, rowIndex)}
+                    className={classes.dropdownSize}
+                  >
+                    {[...Array(20).keys()].map((item) => (
+                      <MenuItem key={item + 1} value={item + 1}>
+                        {item + 1}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Grid>
+                {rowIndex > 0 ? (
+                  <Grid item xs={2}>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => removeRows(rowIndex)}
+                      className={classes.deleteButtons}
+                    >
+                      <DeleteIcon fontSize="small" color="primary" />
+                    </IconButton>
+                  </Grid>
+                ) : (
+                  <Grid item xs={2}></Grid>
+                )}
+              </Fragment>
+            );
+          })}
+        </Grid>
+        {party.length < 10 && (
+          <Grid item xs={12} className={classes.addButton}>
+            <Button variant="contained" color="primary" onClick={addRows}>
+              <AddIcon></AddIcon> Add level
+            </Button>
+          </Grid>
+        )}
+      </Grid>
+      <Grid container item xs={6} className={classes.xpInfo} direction="column">
+        <Grid item>
+          {Object.keys(difficulty).map((item) => (
+            <Typography variant="body2" key={item} align="right">
+              {item[0].toUpperCase() + item.slice(1)}:{" "}
+              {difficulty[item].toLocaleString("en-US")}XP
+            </Typography>
+          ))}
+        </Grid>
+        <Grid item>
+          <Typography
+            variant="body2"
+            align="right"
+            className={classes.dailyBudget}
+          >
+            Daily budget: {partyBudget.toLocaleString("en-US")}XP
+          </Typography>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 

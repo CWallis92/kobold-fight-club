@@ -1,27 +1,7 @@
-main {
-  display: flex;
-  justify-content: space-around;
-}
-
-.col {
-  padding: 1em;
-  height: calc(100vh - 2em);
-}
-
-#leftCol {
-  width: 30%;
-  min-width: 300px;
-}
-
-#rightCol {
-  width: 70%;
-  position: relative;
-}
-
 #listLoading {
   text-align: center;
   position: absolute;
-  top: 49%;
+  top: 50%;
   right: 50%;
 }
 

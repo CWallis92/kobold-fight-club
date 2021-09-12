@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import {
   Table,
   TableBody,
@@ -6,13 +6,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
+  Card,
   IconButton,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 import { MonsterTableHeader } from "..";
-import { useStyles } from "../../styles/makeStyles";
+import { useStyles } from "../../styles/MonsterList";
 import { MonstersContext, EncounterContext } from "../../utils/contexts";
 import { addToEncounter } from "../../utils/encounterBuild";
 
@@ -36,7 +36,7 @@ const MonstersList = () => {
   };
 
   return (
-    <TableContainer className={classes.container} component={Paper}>
+    <TableContainer className={classes.container} component={Card}>
       <Table stickyHeader aria-label="Monsters Table">
         <TableHead>
           <TableRow>

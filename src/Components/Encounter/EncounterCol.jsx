@@ -15,7 +15,7 @@ const EncounterCol = () => {
   const { party, setParty, difficulty } = useParty();
 
   return (
-    <div id="leftCol" className="col">
+    <>
       <EncounterParty
         party={party}
         setParty={setParty}
@@ -37,7 +37,7 @@ const EncounterCol = () => {
           />
         </>
       )}
-    </div>
+    </>
   );
 };
 

@@ -25,7 +25,7 @@ const MonstersCol = () => {
         setMonstersSort,
       }}
     >
-      <div id="rightCol" className="col">
+      <div>
         {isLoading ? (
           <CircularProgress id="listLoading" />
         ) : (
