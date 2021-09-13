@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   Table,
   TableBody,
@@ -8,16 +8,28 @@ import {
   TableRow,
   Card,
   IconButton,
+  TablePagination,
+  Typography,
+  useMediaQuery,
 } from "@material-ui/core";
+import { withStyles } from "@material-ui/styles";
 import AddIcon from "@material-ui/icons/Add";
 
-import { MonsterTableHeader } from "..";
+import { MonsterTableHeader, TablePaginationActions } from "..";
 import { useStyles } from "../../styles/MonsterList";
 import { MonstersContext, EncounterContext } from "../../utils/contexts";
 import { addToEncounter } from "../../utils/encounterBuild";
 
 const MonstersList = () => {
   const classes = useStyles();
+  const matches = useMediaQuery((theme) => theme.breakpoints.down("xs"));
+  const StyledTableRow = withStyles((theme) => ({
+    root: {
+      "&:nth-of-type(odd)": {
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+  }))(TableRow);
 
   const {
     filteredMonsters,
@@ -26,6 +38,13 @@ const MonstersList = () => {
     setMonstersSort,
   } = useContext(MonstersContext);
   const { setEncounterBuild } = useContext(EncounterContext);
+
+  const [page, setPage] = useState(0);
+  const rowsPerPage = 10;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
   const columns = {
     name: "Monster Name",
@@ -36,48 +55,96 @@ const MonstersList = () => {
   };
 
   return (
-    <TableContainer className={classes.container} component={Card}>
-      <Table stickyHeader aria-label="Monsters Table">
-        <TableHead>
-          <TableRow>
-            <TableCell></TableCell>
-            {Object.keys(columns).map((column) => (
-              <MonsterTableHeader
-                key={column}
-                column={column}
-                prettyColumn={columns[column]}
-                monstersSort={monstersSort}
-                setMonstersSort={setMonstersSort}
-                setFilteredMonsters={setFilteredMonsters}
-              />
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {filteredMonsters.map((monster) => (
-            <TableRow key={monster.slug}>
-              <TableCell>
-                <IconButton
-                  color="primary"
-                  size="small"
-                  variant="contained"
-                  onClick={() =>
-                    setEncounterBuild((currEncounterBuild) =>
-                      addToEncounter(1, monster, currEncounterBuild)
-                    )
-                  }
-                >
-                  <AddIcon />
-                </IconButton>
-              </TableCell>
-              {Object.keys(columns).map((column) => (
-                <TableCell key={column}>{monster[column]}</TableCell>
-              ))}
+    <>
+      <TableContainer className={classes.container} component={Card}>
+        <Table stickyHeader aria-label="Monsters Table">
+          <TableHead>
+            <TableRow>
+              <TableCell></TableCell>
+              {matches ? (
+                <MonsterTableHeader
+                  column="name"
+                  prettyColumn="Monster"
+                  monstersSort={monstersSort}
+                  setMonstersSort={setMonstersSort}
+                  setFilteredMonsters={setFilteredMonsters}
+                />
+              ) : (
+                Object.keys(columns).map((column) => (
+                  <MonsterTableHeader
+                    key={column}
+                    column={column}
+                    prettyColumn={columns[column]}
+                    monstersSort={monstersSort}
+                    setMonstersSort={setMonstersSort}
+                    setFilteredMonsters={setFilteredMonsters}
+                  />
+                ))
+              )}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {filteredMonsters
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((monster) => (
+                <StyledTableRow key={monster.slug}>
+                  <TableCell align="center" padding="checkbox">
+                    <IconButton
+                      color="primary"
+                      size="small"
+                      onClick={() =>
+                        setEncounterBuild((currEncounterBuild) =>
+                          addToEncounter(1, monster, currEncounterBuild)
+                        )
+                      }
+                    >
+                      <AddIcon />
+                    </IconButton>
+                    {matches && (
+                      <Typography variant="caption">
+                        CR: {monster.challenge_rating}
+                      </Typography>
+                    )}
+                  </TableCell>
+                  {matches ? (
+                    <TableCell>
+                      <Typography variant="h6">{monster.name}</Typography>
+                      <div className={classes.mobileRow}>
+                        <Typography variant="body2">
+                          {`Size: ${monster.size}`}
+                        </Typography>
+                      </div>
+                      <div className={classes.mobileRow}>
+                        <Typography variant="body2">
+                          {`Type: ${monster.type}`}
+                        </Typography>
+                      </div>
+                      <div className={classes.mobileRow}>
+                        <Typography variant="body2">
+                          {`Alignment: ${monster.alignment}`}
+                        </Typography>
+                      </div>
+                    </TableCell>
+                  ) : (
+                    Object.keys(columns).map((column) => (
+                      <TableCell key={column}>{monster[column]}</TableCell>
+                    ))
+                  )}
+                </StyledTableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        component="div"
+        rowsPerPageOptions={[rowsPerPage]}
+        count={filteredMonsters.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        ActionsComponent={TablePaginationActions}
+      />
+    </>
   );
 };
 

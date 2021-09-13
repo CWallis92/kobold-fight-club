@@ -1,9 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 
+import { theme } from "./Theme";
+
 export const useStyles = makeStyles({
   container: {
-    padding: "0 0.5em",
+    padding: "0 0.5em 1em",
     marginBottom: "1em",
+    borderBottom: `1px solid ${theme.palette.primary.main}`,
   },
   fields: {
     width: "100%",

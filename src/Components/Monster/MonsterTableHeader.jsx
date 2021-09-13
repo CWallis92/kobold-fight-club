@@ -1,6 +1,4 @@
-import { TableCell } from "@material-ui/core";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import { TableCell, TableSortLabel } from "@material-ui/core";
 
 import { listSort } from "../../utils/monsterListFunctions";
 
@@ -17,9 +15,9 @@ const MonsterTableHeader = ({
       return {
         column: column,
         order:
-          column !== currSort.column || currSort.order === "desc"
-            ? "asc"
-            : "desc",
+          column !== currSort.column || currSort.order === "asc"
+            ? "desc"
+            : "asc",
       };
     });
     setFilteredMonsters((currList) => {
@@ -31,15 +29,11 @@ const MonsterTableHeader = ({
   return (
     <TableCell data={column} onClick={applySort} className="headerColumn">
       {`${prettyColumn} `}
-      {(() => {
-        if (monstersSort.column === column) {
-          return monstersSort.order === "asc" ? (
-            <ArrowUpwardIcon className={"arrow"} />
-          ) : (
-            <ArrowDownwardIcon className={"arrow"} />
-          );
-        }
-      })()}
+      <TableSortLabel
+        active={monstersSort.column === column}
+        direction={monstersSort.order}
+        className={"arrow"}
+      />
     </TableCell>
   );
 };

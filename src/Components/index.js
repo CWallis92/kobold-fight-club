@@ -9,6 +9,7 @@ import MonstersFilter from "./Monster/MonstersFilter";
 import FilterBox from "./Monster/FilterBox";
 import MonstersList from "./Monster/MonstersList";
 import MonsterTableHeader from "./Monster/MonsterTableHeader";
+import TablePaginationActions from "./Monster/TablePagination";
 
 export {
   EncounterCol,
@@ -22,4 +23,5 @@ export {
   FilterBox,
   MonstersList,
   MonsterTableHeader,
+  TablePaginationActions,
 };

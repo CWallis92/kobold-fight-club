@@ -4,7 +4,6 @@ import { ThemeProvider } from "@material-ui/styles";
 
 import { EncounterCol, MonstersCol } from "./Components";
 import { EncounterContext } from "./utils/contexts";
-import "./styles/App.css";
 import { theme } from "./styles/Theme";
 
 function App() {

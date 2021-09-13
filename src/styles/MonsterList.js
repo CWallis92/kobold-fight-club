@@ -8,4 +8,8 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     maxHeight: "70vh",
   },
+  mobileRow: {
+    marginRight: "10px",
+    display: "inline-block",
+  },
 }));

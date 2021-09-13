@@ -1,5 +1,11 @@
-import { Grid, Slider, TextField, Typography } from "@material-ui/core";
 import { memo, useContext } from "react";
+import {
+  Grid,
+  InputLabel,
+  Slider,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 
 import { FilterBox } from "..";
 import { useFilter } from "../../hooks/useFilter";
@@ -41,7 +47,7 @@ const MonstersFilter = () => {
 
   return (
     <Grid container spacing={2} className={classes.container}>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={9} md={6}>
         <TextField
           label="Search"
           val={searchTerm}
@@ -49,7 +55,7 @@ const MonstersFilter = () => {
           className={classes.fields}
         />
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={12} sm={6} lg={3}>
         <FilterBox
           categoryName={"Size"}
           categoryList={sizes}
@@ -58,7 +64,7 @@ const MonstersFilter = () => {
           allSelected={allSizesSelected}
         />
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={12} sm={6} lg={3}>
         <FilterBox
           categoryName={"Type"}
           categoryList={types}
@@ -67,7 +73,7 @@ const MonstersFilter = () => {
           allSelected={allTypesSelected}
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6} lg={3}>
         <FilterBox
           categoryName={"Alignment"}
           categoryList={alignments}
@@ -76,7 +82,7 @@ const MonstersFilter = () => {
           allSelected={allAlignmentsSelected}
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6} lg={3}>
         <FilterBox
           categoryName={"Legendary Status"}
           categoryList={legendary}
@@ -85,9 +91,10 @@ const MonstersFilter = () => {
           allSelected={null}
         />
       </Grid>
-      <Grid item xs={12}>
-        <legend>Challenge Rating</legend>
+      <Grid item xs={12} md={6}>
+        <InputLabel id="challengeRating">Challenge Rating</InputLabel>
         <Slider
+          labelId="challengeRating"
           value={[descale(crRange[0]), descale(crRange[1])]}
           onChange={(e, value) => {
             setCrRange([scale(value[0]), scale(value[1])]);

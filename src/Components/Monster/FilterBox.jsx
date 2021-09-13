@@ -41,15 +41,15 @@ const FilterBox = ({
               <Chip label={`Any ${categoryName}`} className={classes.chip} />
             ) : (
               selected.map((value) => {
-                if (selected.indexOf(value) === 3)
+                if (selected.indexOf(value) === 1)
                   return (
                     <Chip
                       key={value}
-                      label={`...${selected.length - 3} more`}
+                      label={`...${selected.length - 1} more`}
                       className={classes.chip}
                     />
                   );
-                if (selected.indexOf(value) > 3) return "";
+                if (selected.indexOf(value) > 1) return "";
                 return (
                   <Chip
                     key={value}
