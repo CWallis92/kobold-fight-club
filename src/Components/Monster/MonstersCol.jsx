@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Typography } from "@material-ui/core";
 
 import { MonstersFilter, MonstersList } from "..";
 import { MonstersContext } from "../../utils/contexts";
@@ -24,6 +24,7 @@ const MonstersCol = () => {
     isLoading,
     monstersSort,
     setMonstersSort,
+    error,
   } = useMonsters();
 
   return (
@@ -38,6 +39,10 @@ const MonstersCol = () => {
     >
       {isLoading ? (
         <CircularProgress className={classes.loading} />
+      ) : error ? (
+        <Typography variant="h6">
+          There was an error loading the data. Try again later
+        </Typography>
       ) : (
         <>
           <MonstersFilter />

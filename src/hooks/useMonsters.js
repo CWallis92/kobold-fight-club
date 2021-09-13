@@ -11,6 +11,8 @@ export const useMonsters = () => {
     order: "asc",
   });
 
+  const [error, setError] = useState(false);
+
   useEffect(() => {
     getMonsters()
       .then(({ data: { count } }) => {
@@ -24,6 +26,10 @@ export const useMonsters = () => {
             return monster;
           })
         );
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(true);
         setIsLoading(false);
       });
   }, []);
@@ -39,5 +45,6 @@ export const useMonsters = () => {
     isLoading,
     monstersSort,
     setMonstersSort,
+    error,
   };
 };
