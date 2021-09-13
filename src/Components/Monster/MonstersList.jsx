@@ -40,10 +40,15 @@ const MonstersList = () => {
   const { setEncounterBuild } = useContext(EncounterContext);
 
   const [page, setPage] = useState(0);
-  const rowsPerPage = 10;
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   const columns = {
@@ -137,9 +142,10 @@ const MonstersList = () => {
       </TableContainer>
       <TablePagination
         component="div"
-        rowsPerPageOptions={[rowsPerPage]}
+        rowsPerPageOptions={[10, 25]}
         count={filteredMonsters.length}
         rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         ActionsComponent={TablePaginationActions}
