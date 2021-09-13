@@ -101,7 +101,7 @@ const EncounterParty = ({ party, setParty, difficulty }) => {
                       onClick={() => removeRows(rowIndex)}
                       className={classes.deleteButtons}
                     >
-                      <DeleteIcon color="primary" />
+                      <DeleteIcon color="secondary" />
                     </IconButton>
                   </Grid>
                 ) : (
