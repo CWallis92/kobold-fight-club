@@ -8,7 +8,7 @@ const useParty = () => {
     easy: 25,
     medium: 50,
     hard: 75,
-    Deadly: 100,
+    deadly: 100,
   });
 
   useEffect(() => {
